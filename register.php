@@ -55,7 +55,7 @@
                         echo '<div class="message2">
                             <p>Registration Successful!</p>
                           </div><br>';
-                        echo "<a href='indexx.php'><button class='btn'>Login Now</button>";
+                        echo "<a href='index.php'><button class='btn'>Login Now</button>";
                     } else {
                         echo "<div class='message'>
                             <p>Error occurred while registering. Please try again.</p>
@@ -97,7 +97,7 @@
                 </div>
 
                 <div class="links">
-                    Already a member? <a href="indexx.php">Sign In</a>
+                    Already a member? <a href="index.php">Sign In</a>
                 </div>
             </form>
         </div>

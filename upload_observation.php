@@ -14,7 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Handle photo upload
     $upload_dir = 'uploads/';
-    $file_name = basename($_FILES['photo']['name']);
+    // Generate unique filename to prevent overwrites
+    $file_name = date('Y_m_d_H_i_') . basename($_FILES['photo']['name']);
     $upload_file = $upload_dir . $file_name;
 
     if (move_uploaded_file($_FILES['photo']['tmp_name'], $upload_file)) {
@@ -23,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   VALUES (:user_id, :photo_path, :species, :location, :latitude, :longitude)";
         $stmt = $conn->prepare($query);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
-        $stmt->bindValue(':photo_path', $upload_file, PDO::PARAM_STR);
+        $stmt->bindValue(':photo_path', $file_name, PDO::PARAM_STR);
         $stmt->bindValue(':species', $species, PDO::PARAM_STR);
         $stmt->bindValue(':location', $location, PDO::PARAM_STR);
         $stmt->bindValue(':latitude', $latitude, PDO::PARAM_STR);

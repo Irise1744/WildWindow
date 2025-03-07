@@ -4,7 +4,7 @@ include 'php/config.php';
 
 // Check if the user is logged in
 if (!isset($_SESSION['username'])) {
-    header('Location: indexx.php'); // Redirect to login page if not logged in
+    header('Location: index.php'); // Redirect to login page if not logged in
     exit();
 }
 
@@ -24,8 +24,9 @@ if (isset($_POST['upload'])) {
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true);
         }
-
-        $fileName = basename($_FILES['userImage']['name']);
+ 
+        // Generate unique filename to prevent overwrites
+        $fileName = date('Y_m_d_H_i_') . basename($_FILES['userImage']['name']);
         $targetFile = $uploadDir . $fileName;
         $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
         $fileType = $_FILES['userImage']['type'];
@@ -85,7 +86,7 @@ $photos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <br><br>
         <button type="submit" name="upload">Upload</button>
     </form>
-    <p><a href="profile.php">Go to Profile</a></p>
+    <!-- <p><a href="profile.php">Go to Profile</a></p> -->
 </div>
 
 <h2>Latest Photos</h2>
@@ -93,9 +94,53 @@ $photos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php if (!empty($photos)): ?>
         <?php foreach ($photos as $photo): ?>
             <div class="photo-item">
-                <img src="<?php echo htmlspecialchars($photo['filename']); ?>" alt="User Photo" style="width: 200px; height: auto;">
-                <p><strong>Uploaded by:</strong> <?php echo htmlspecialchars($photo['username']); ?></p>
-                <small>Uploaded on: <?php echo htmlspecialchars($photo['created_at']); ?></small>
+                <div class="photo-header">
+                    <div class="user-avatar">
+                        <?php echo substr(htmlspecialchars($photo['username']), 0, 1); ?>
+                    </div>
+                    <div class="user-info">
+                        <a href="view_user.php?id=<?php echo htmlspecialchars($photo['user_id']); ?>" class="username">
+                            <?php echo htmlspecialchars($photo['username']); ?>
+                        </a>
+                        <div class="timestamp"><?php echo date('F j, Y \a\t g:i a', strtotime($photo['created_at'])); ?></div>
+                    </div>
+                    <div class="post-options">...</div>
+                </div>
+                
+                <div class="photo-content">
+                    <img src="uploads/<?php echo htmlspecialchars($photo['filename']); ?>" alt="User Photo">
+                </div>
+                
+                <div class="photo-footer">
+                    <div class="engagement-info">
+                        <div class="like-count">
+                            <div class="like-icon"><i>👍</i></div>
+                            <span>42</span>
+                        </div>
+                        <div class="comment-share-count">
+                            <span>5 comments • 2 shares</span>
+                        </div>
+                    </div>
+                    
+                    <div class="action-bar">
+                        <div class="action-button">
+                            <i>👍</i> Like
+                        </div>
+                        <div class="action-button">
+                            <i>💬</i> Comment
+                        </div>
+                        <div class="action-button">
+                            <i>↗️</i> Share
+                        </div>
+                    </div>
+                    
+                    <div class="photo-caption">
+                        <a href="view_user.php?id=<?php echo htmlspecialchars($photo['user_id']); ?>" class="username">
+                            <?php echo htmlspecialchars($photo['username']); ?>
+                        </a>
+                        shared a beautiful plant photo
+                    </div>
+                </div>
             </div>
         <?php endforeach; ?>
     <?php else: ?>

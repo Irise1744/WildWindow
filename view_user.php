@@ -113,16 +113,55 @@ $observations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Observations Section -->
     <h3>Observations</h3>
-    <div class="observations">
+    <div class="photo-gallery">
         <?php if (!empty($observations)): ?>
             <?php foreach ($observations as $observation): ?>
-                <div class="observation">
-                    <img src="<?php echo htmlspecialchars($observation['photo_path']); ?>" alt="Observation Photo" style="width: 200px; height: auto;">
-                    <p><strong>Species:</strong> <?php echo htmlspecialchars($observation['species']); ?></p>
-                    <p><strong>Location:</strong> <?php echo htmlspecialchars($observation['location']); ?></p>
-                    <p><small>Posted on: <?php echo htmlspecialchars($observation['created_at']); ?></small></p>
+                <div class="photo-item">
+                    <div class="photo-header">
+                        <div class="user-avatar">
+                            <?php echo substr(htmlspecialchars($user['username']), 0, 1); ?>
+                        </div>
+                        <div class="user-info">
+                            <span class="username"><?php echo htmlspecialchars($user['username']); ?></span>
+                            <div class="timestamp"><?php echo date('F j, Y \a\t g:i a', strtotime($observation['created_at'])); ?></div>
+                        </div>
+                        <div class="post-options">...</div>
+                    </div>
+                    
+                    <div class="photo-content">
+                        <img src="uploads/<?php echo htmlspecialchars($observation['photo_path']); ?>" alt="Observation Photo">
+                    </div>
+                    
+                    <div class="photo-footer">
+                        <div class="engagement-info">
+                            <div class="like-count">
+                                <div class="like-icon"><i>👍</i></div>
+                                <span>27</span>
+                            </div>
+                            <div class="comment-share-count">
+                                <span>4 comments • 3 shares</span>
+                            </div>
+                        </div>
+                        
+                        <div class="action-bar">
+                            <div class="action-button">
+                                <i>👍</i> Like
+                            </div>
+                            <div class="action-button">
+                                <i>💬</i> Comment
+                            </div>
+                            <div class="action-button">
+                                <i>↗️</i> Share
+                            </div>
+                        </div>
+                        
+                        <div class="photo-caption">
+                            <span class="username"><?php echo htmlspecialchars($user['username']); ?></span>
+                            observed <strong><?php echo htmlspecialchars($observation['species']); ?></strong> 
+                            at <?php echo htmlspecialchars($observation['location']); ?>
+                        </div>
+                    </div>
                 </div>
-                <hr>
             <?php endforeach; ?>
         <?php else: ?>
             <p>No observations to display.</p>

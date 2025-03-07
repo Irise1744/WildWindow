@@ -39,9 +39,53 @@ $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Observation Details</title>
 </head>
 <body>
-    <h1><?php echo htmlspecialchars($observation['species']); ?></h1>
-    <p><strong>Location:</strong> <?php echo htmlspecialchars($observation['location']); ?></p>
-    <p><img src="<?php echo $observation['photo_path']; ?>" alt="Observation Photo" style="max-width: 500px;"></p>
+    <div class="photo-gallery">
+        <div class="photo-item">
+            <div class="photo-header">
+                <div class="user-avatar">
+                    <i>🌿</i>
+                </div>
+                <div class="user-info">
+                    <span class="username"><?php echo htmlspecialchars($observation['species']); ?></span>
+                    <div class="timestamp"><?php echo date('F j, Y \a\t g:i a', strtotime($observation['created_at'])); ?></div>
+                </div>
+                <div class="post-options">...</div>
+            </div>
+            
+            <div class="photo-content">
+                <img src="uploads/<?php echo $observation['photo_path']; ?>" alt="Observation Photo">
+            </div>
+            
+            <div class="photo-footer">
+                <div class="engagement-info">
+                    <div class="like-count">
+                        <div class="like-icon"><i>👍</i></div>
+                        <span>31</span>
+                    </div>
+                    <div class="comment-share-count">
+                        <span><?php echo count($comments); ?> comments • 2 shares</span>
+                    </div>
+                </div>
+                
+                <div class="action-bar">
+                    <div class="action-button">
+                        <i>👍</i> Like
+                    </div>
+                    <div class="action-button">
+                        <i>💬</i> Comment
+                    </div>
+                    <div class="action-button">
+                        <i>↗️</i> Share
+                    </div>
+                </div>
+                
+                <div class="photo-caption">
+                    <strong>Species:</strong> <?php echo htmlspecialchars($observation['species']); ?><br>
+                    <strong>Location:</strong> <?php echo htmlspecialchars($observation['location']); ?>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Comment Form -->
     <h2>Leave a Comment</h2>

@@ -40,13 +40,53 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </form>
 
     <!-- Search Results -->
-    <div class="search-results">
+    <div class="photo-gallery">
         <?php if (count($results) > 0) { ?>
             <?php foreach ($results as $result) { ?>
-                <div class="observation">
-                    <img src="<?php echo $result['photo_path']; ?>" alt="Observation Photo" style="max-width: 200px; height: auto;">
-                    <p><strong>Species:</strong> <?php echo htmlspecialchars($result['species']); ?></p>
-                    <p><strong>Location:</strong> <?php echo htmlspecialchars($result['location']); ?></p>
+                <div class="photo-item">
+                    <div class="photo-header">
+                        <div class="user-avatar">
+                            <i>🔍</i>
+                        </div>
+                        <div class="user-info">
+                            <span class="username">Search Result</span>
+                            <div class="timestamp">Found for: "<?php echo htmlspecialchars($query); ?>"</div>
+                        </div>
+                        <div class="post-options">...</div>
+                    </div>
+                    
+                    <div class="photo-content">
+                        <img src="uploads/<?php echo $result['photo_path']; ?>" alt="Observation Photo">
+                    </div>
+                    
+                    <div class="photo-footer">
+                        <div class="engagement-info">
+                            <div class="like-count">
+                                <div class="like-icon"><i>👍</i></div>
+                                <span>15</span>
+                            </div>
+                            <div class="comment-share-count">
+                                <span>2 comments • 1 share</span>
+                            </div>
+                        </div>
+                        
+                        <div class="action-bar">
+                            <div class="action-button">
+                                <i>👍</i> Like
+                            </div>
+                            <div class="action-button">
+                                <i>💬</i> Comment
+                            </div>
+                            <div class="action-button">
+                                <i>↗️</i> Share
+                            </div>
+                        </div>
+                        
+                        <div class="photo-caption">
+                            <strong>Species:</strong> <?php echo htmlspecialchars($result['species']); ?><br>
+                            <strong>Location:</strong> <?php echo htmlspecialchars($result['location']); ?>
+                        </div>
+                    </div>
                 </div>
             <?php } ?>
         <?php } else { ?>

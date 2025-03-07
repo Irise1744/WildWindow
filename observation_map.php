@@ -43,10 +43,9 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 .bindPopup(
                     `<strong><?php echo htmlspecialchars($observation['species']); ?></strong><br>
                      <?php echo htmlspecialchars($observation['location']); ?><br>
-                     <img src="<?php echo $observation['photo_path']; ?>" alt="Observation Photo" style="width: 100px; height: auto;">`
+                     <img src="uploads/<?php echo $observation['photo_path']; ?>" alt="Observation Photo" style="width: 100px; height: auto;">`
                 );
         <?php } ?>
     </script>
 </body>
 </html>
-
